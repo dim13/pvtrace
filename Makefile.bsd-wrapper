@@ -1,0 +1,7 @@
+# $Id$
+
+PROG=		pvtrace
+SRCS=		trace.c symbols.c stack.c
+NOMAN=
+
+.include <bsd.prog.mk>
