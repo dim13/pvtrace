@@ -187,9 +187,9 @@ void emitSymbols( void )
     for (to = 0 ; to < MAX_FUNCTIONS ; to++) {
 
       if (calls[from][to]) {
-        fprintf( fp, "  %s -> %s [label=\"%d calls\" fontsize=\"10\"]\n", 
+        fprintf( fp, "  %s -> %s [label=\"%d call%s\" fontsize=\"10\"]\n", 
                   functions[from].funcName, functions[to].funcName,
-                  calls[from][to] );
+                  calls[from][to], calls[from][to] > 1 ? "s" : "" );
       }
 
       if (functions[to].address == 0) break;
