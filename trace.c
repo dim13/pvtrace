@@ -15,58 +15,44 @@
 #include "symbols.h"
 #include "stack.h"
 
-
-int main( int argc, char *argv[] )
+int
+main(int argc, char *argv[])
 {
-  FILE *tracef;
-  char type;
-  unsigned int address;
+	FILE *tracef;
+	char type;
+	unsigned int address;
 
-  if (argc != 2) {
+	if (argc != 2) {
+		printf("Usage: pvtrace <image>\n\n");
+		exit(-1);
+	}
+	initSymbol(argv[1]);
+	stackInit();
 
-    printf("Usage: pvtrace <image>\n\n");
-    exit(-1);
+	tracef = fopen("trace.txt", "r");
 
-  }
+	if (tracef == NULL) {
+		printf("Can't open trace.txt\n");
+		exit(-1);
+	}
+	while (!feof(tracef)) {
+		fscanf(tracef, "%c0x%x\n", &type, &address);
+		switch (type) {
+		case 'E':
+			/* Function Entry */
+			addSymbol(address);
+			addCallTrace(address);
+			stackPush(address);
+			break;
+		case 'X':
+			/* Function Exit */
+			(void) stackPop();
+			break;
+		}
+	}
 
-  initSymbol( argv[1] );
-  stackInit();
+	emitSymbols();
+	fclose(tracef);
 
-  tracef = fopen("trace.txt", "r");
-
-  if (tracef == NULL) {
-    printf("Can't open trace.txt\n");
-    exit(-1);
-  }
-
-  while (!feof(tracef)) {
-
-    fscanf( tracef, "%c0x%x\n", &type, &address );
-
-    if        (type == 'E') {
-
-      /* Function Entry */
-
-      addSymbol( address );
-
-      addCallTrace( address );
-
-      stackPush( address );
-
-    } else if (type == 'X') {
-
-      /* Function Exit */
-
-      (void) stackPop();
-
-    }
-
-  }
-
-  emitSymbols();
-
-  fclose( tracef );
-  
-  return 0;
+	return 0;
 }
-

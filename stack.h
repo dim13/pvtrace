@@ -11,15 +11,12 @@
 #ifndef __STACK_H
 #define __STACK_H
 
-void stackInit( void );
+__BEGIN_DECLS
+void stackInit(void);
+int stackNumElems(void);
+unsigned int stackTop(void);
+void stackPush(unsigned int value);
+unsigned int stackPop(void);
+__END_DECLS
 
-int stackNumElems( void );
-
-unsigned int stackTop( void );
-
-void stackPush( unsigned int value );
-
-unsigned int stackPop( void );
-
-#endif /* __STACK_H */
-
+#endif

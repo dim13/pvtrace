@@ -15,48 +15,44 @@
 static int stack[MAX_ELEMENTS];
 static int index;
 
-void stackInit( void )
+void
+stackInit(void)
 {
-  index = 0;
-
-  return;
+	index = 0;
 }
 
-
-int stackNumElems( void )
+int
+stackNumElems(void)
 {
-  return index;
+	return index;
 }
 
-
-unsigned int stackTop( void )
+unsigned int
+stackTop(void)
 {
-  assert( index > 0 );
+	assert(index > 0);
 
-  return (stack[index-1]);
+	return (stack[index - 1]);
 }
 
-
-void stackPush( unsigned int value )
+void
+stackPush(unsigned int value)
 {
-  assert ( index < MAX_ELEMENTS );
+	assert(index < MAX_ELEMENTS);
 
-  stack[index] = value;
-  index++;
-
-  return;
+	stack[index] = value;
+	index++;
 }
 
-
-unsigned int stackPop( void )
+unsigned int
+stackPop(void)
 {
-  unsigned int value;
+	unsigned int value;
 
-  assert( index > 0 );
+	assert(index > 0);
 
-  index--;
-  value = stack[index];
+	index--;
+	value = stack[index];
 
-  return value;
+	return value;
 }
-
