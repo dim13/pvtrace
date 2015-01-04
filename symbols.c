@@ -27,7 +27,7 @@ initSymbol(char *image)
 {
 	int from, to;
 
-	strncpy(imageName, image, sizeof(imageName));
+	strlcpy(imageName, image, sizeof(imageName));
 
 	for (from = 0; from < MAX_FUNCTIONS; from++) {
 		functions[from].address = 0;
