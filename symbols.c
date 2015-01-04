@@ -106,7 +106,6 @@ addSymbol(unsigned int address)
 void
 addCallTrace(unsigned int address)
 {
-
 	if (stackNumElems())
 		calls[lookupSymbol(stackTop())][lookupSymbol(address)]++;
 }
@@ -137,10 +136,9 @@ emitSymbols(void)
 				totals[from]++;
 		}
 
-		if (totals[from])
-			fprintf(fp, "  %s [shape=rectangle]\n", functions[from].funcName);
-		else
-			fprintf(fp, "  %s [shape=ellipse]\n", functions[from].funcName);
+		fprintf(fp, "  %s [shape=%s]\n",
+			totals[from] ? "rectangle" : "ellipse",
+			functions[from].funcName);
 	}
 
 	/* Emit call graph */
