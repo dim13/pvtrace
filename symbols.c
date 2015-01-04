@@ -68,19 +68,18 @@ translateFunctionFromSymbol(unsigned int address, char *func)
 
 	if (p == NULL)
 		return 0;
-	else {
-		len = fread(line, 99, 1, p);
 
-		for (i = 0; i < strlen(line); i++) {
-			if ((line[i] == 0x0d) || (line[i] == 0x0a)) {
-				func[i] = 0;
-				break;
-			} else {
-				func[i] = line[i];
-			}
+	len = fread(line, 99, 1, p);
+
+	for (i = 0; i < strlen(line); i++) {
+		if ((line[i] == 0x0d) || (line[i] == 0x0a)) {
+			func[i] = 0;
+			break;
+		} else {
+			func[i] = line[i];
 		}
-		pclose(p);
 	}
+	pclose(p);
 
 	return 1;
 }
