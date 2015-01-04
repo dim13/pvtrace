@@ -10,7 +10,7 @@ CC = gcc
 OBJS = trace.o symbols.o stack.o
 
 pvtrace: $(OBJS)
-	gcc -o $@ $(OBJS)
+	gcc -o $@ $(OBJS) -lbsd
 
 .c.o:
 	$(CC) $(CFLAGS) -Wall -c $<

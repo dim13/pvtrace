@@ -17,6 +17,10 @@
 #include "stack.h"
 #include "symbols.h"
 
+#if defined(__linux__)
+#include <bsd/string.h>
+#endif
+
 func_t functions[MAX_FUNCTIONS];
 unsigned int totals[MAX_FUNCTIONS];
 unsigned int calls[MAX_FUNCTIONS][MAX_FUNCTIONS];
@@ -60,7 +64,7 @@ translateFunctionFromSymbol(unsigned int address, char *func)
 {
 	FILE *p;
 	char line[100];
-	int len, i;
+	int i;
 
 	snprintf(line, sizeof(line), "addr2line -e %s -f -s 0x%x", imageName, address);
 
@@ -69,7 +73,7 @@ translateFunctionFromSymbol(unsigned int address, char *func)
 	if (p == NULL)
 		return 0;
 
-	len = fread(line, 99, 1, p);
+	fread(line, 99, 1, p);
 
 	for (i = 0; i < strlen(line); i++) {
 		if ((line[i] == 0x0d) || (line[i] == 0x0a)) {
