@@ -16,10 +16,6 @@
 #include "stack.h"
 #include "symbols.h"
 
-#if defined(__linux__)
-#include <bsd/string.h>
-#endif
-
 func_t functions[MAX_FUNCTIONS];
 unsigned int totals[MAX_FUNCTIONS];
 unsigned int calls[MAX_FUNCTIONS][MAX_FUNCTIONS];
@@ -30,7 +26,8 @@ initSymbol(char *image)
 {
 	int from, to;
 
-	strlcpy(imageName, image, sizeof(imageName));
+	strncpy(imageName, image, sizeof(imageName) - 1);
+	imageName[sizeof(imageName) - 1] = '\0';
 
 	for (from = 0; from < MAX_FUNCTIONS; from++) {
 		functions[from].address = 0;
